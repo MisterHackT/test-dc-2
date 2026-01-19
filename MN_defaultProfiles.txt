@@ -1,0 +1,63 @@
+//Default profiles :
+
+Super Administrateur
+is_SA = true
+Bubble = add, edit, list
+User = add
+
+Administrateur
+is_BA = true
+User = add, list
+
+Opérateur
+is_OP = true
+PrintJobs = add, execute, list
+PrintDetails = list
+
+Fabricant
+is_MAN = true
+
+Industriel
+is_IND = true
+PrintJobs = list
+PrintDetails = list
+
+Valideur_Plan
+is_VA = true
+Blueprint = valid, list
+
+Valideur_Impression
+is_VA = true
+PrintJobs = valid, list
+PrintDetail = valid, list
+
+//to bypass foreign key check (for bubble id): 
+SET foreign_key_checks = 0;
+
+INSERT INTO profile (p_id,label,is_SA,Bubble,User)VALUES(1,'Super Administrateur',true,('add,edit,list'),('add'));
+
+//then after inserting the SA profile return it back to true
+SET foreign_key_checks = 1;
+
+INSERT INTO profile (p_id,label,is_BA,User)VALUES(2,'Administrateur',true,('add,list'));
+
+INSERT INTO profile (p_id,label,is_op,PrintJobs,PrintDetails)VALUES(3,'Opérateur',true,('add,execute,list'),('list'));
+
+INSERT INTO profile (p_id,label,is_MAN)VALUES(4,'Fabricant',true);
+
+INSERT INTO profile (p_id,label,is_IND,PrintJobs,PrintDetails)VALUES(5,'Industriel',true,('list'),('list'));
+
+INSERT INTO profile (p_id,label,is_VA,Blueprint)VALUES(6,'Valideur_Plan',true,('valid,list'));
+
+INSERT INTO profile (p_id,label,is_VA,PrintJobs,PrintDetails)VALUES(7,'Valideur_Impression',true,('valid,list'),('valid,list'));
+
+//insert SA user
+INSERT INTO users (u_email,u_password,u_fname,u_lname,u_activation_date,u_is_active,u_gender) VALUES('david.dupont@vistory.com','d@V1D_MC','David','Dupont',now(),true,'M');
+
+//to bypass foreign key check (for bubble id): 
+SET foreign_key_checks = 0;
+
+INSERT INTO user_profile_bubble(p_id,u_id,b_id)VALUES(1,1,0);
+
+//then after inserting the SA profile return it back to true
+SET foreign_key_checks = 1;
